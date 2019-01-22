@@ -2,8 +2,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.annotation.Order;
 import page.MainPage;
-import page.StockinfoPage;
 import page.ZixuanPage;
+
+import java.util.ArrayList;
+
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -12,7 +15,7 @@ public class ZixuanTest {
 
     static MainPage mainPage;
     static ZixuanPage zixuanPage;
-    static StockinfoPage stockinfoPage;
+
 
 
     @BeforeAll
@@ -25,7 +28,9 @@ public class ZixuanTest {
     @Test
     @Order(1)
     void addZixuanTest(){
-        zixuanPage.gotoSearch().search("pa").addZixuan().gotoZixuan();
+
+        ArrayList<String> stocks=zixuanPage.gotoSearch().search("pdd").addZixuan().gotoZixuan().getStocks();
+        assertThat(stocks,hasItems("拼多多"));
     }
 
 
@@ -33,10 +38,9 @@ public class ZixuanTest {
     @Order(2)
     void cancelSelectTest(){
 
+        String toast=zixuanPage.gotoStockinfo().deleteSelect().getToast();
+        assertThat(toast, equalTo("已从自选删除"));
 
-        zixuanPage.gotoStockinfo().deleteSelect();
-        String setText = stockinfoPage.getSetText();
-        assertThat(setText,equalTo("加自选"));
 
     }
 }
