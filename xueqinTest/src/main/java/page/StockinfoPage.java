@@ -13,23 +13,22 @@ public class StockinfoPage extends BasePage {
     private By addSet= By.xpath("//*[@text='加自选']");
     private By delete=text("删除自选");
     private By modify=text("修改分组");
-    int i = 0;
+
 
 
 
     public StockinfoPage deleteSelect() {
 //        find(float_action).findElement(set).click();
 
-        for (i = 0; i < 3; i++) {
+//        for (i = 0; i < 3; i++) {
             WebElement el = Driver.getWait().until(ExpectedConditions.presenceOfElementLocated(set));
             if (el.getText() == "设自选") {
                 el.click();
-                break;
-
-            }else{
-                continue;
+           }else{
+                System.out.println(el.getText());
+                Driver.getWait().until(ExpectedConditions.presenceOfElementLocated(set)).click();
             }
-        }
+
             find(delete).click();
             return new StockinfoPage();
         }
@@ -41,10 +40,9 @@ public class StockinfoPage extends BasePage {
         return Driver.getWait().until(ExpectedConditions.presenceOfElementLocated(addSet)).getText();
     }
 
-//    public String getToast(){
-//        WebElement element=Driver.getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='android.widget.Toast']")));
-//        return element.getText();
-//    }
-
+    public String getToast(){
+        WebElement element=Driver.getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='android.widget.Toast']")));
+        return element.getText();
+    }
 
 }
